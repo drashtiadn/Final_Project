@@ -23,7 +23,7 @@ api_wrapper = WikipediaAPIWrapper(top_k_results=1, doc_content_chars_max=200)
 wiki = WikipediaQueryRun(api_wrapper=api_wrapper)
 
 # DuckDuckGo API Wrapper: Configures the wrapper to fetch news from Germany within the last day, limiting to 2 results
-duckduckgo_wrapper = DuckDuckGoSearchAPIWrapper(region="de-de", time="d", max_results=2)
+duckduckgo_wrapper = DuckDuckGoSearchAPIWrapper(region="in-en", time="d", max_results=2)
 # DuckDuckGoSearchResults: Tool to retrieve search results from DuckDuckGo based on the API wrapper
 duckduckgo = DuckDuckGoSearchResults(api_wrapper=duckduckgo_wrapper, source="news")
 

@@ -1,6 +1,6 @@
 # Usage Guidelines
 
-### 1.1 Interacting with the Chat Bot 
+### <i> 1.1 Interacting with the Chat Bot: </i>
 <b> 1. Access the Streamlit Interface: </b>
 
 - Open your web browser and navigate to http://localhost:8501.
@@ -19,7 +19,7 @@
 
 - View details such as user input, agent's response, and timestamp.
 
-### 1.2 API Endpoints
+### <i> 1.2 API Endpoints: </i>
 <b> 1. Ask the Agent: </b>
 
 - Endpoint: POST /ask
@@ -61,7 +61,7 @@
 ]
 ```
 
-### 1.3 API Documentation
+### <i> 1.3 API Documentation: </i>
 
 Access the interactive API documentation at:
 

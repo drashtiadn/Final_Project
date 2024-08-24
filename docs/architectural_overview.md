@@ -1,6 +1,6 @@
 # Architectural Overview
 
-### 1.1 System Components
+### <i> 1.1 System Components: </i>
 
 <b> 1. FastAPI Application: </b>
 
@@ -14,7 +14,7 @@
 
 - Stores chat history and user interactions.
 
-- Configured through SQLAlchemy ORM.
+- Configured through SQLAlchemy ORM for seamless data management..
 
 <b> 3. LangChain Integration: </b>
 
@@ -26,7 +26,7 @@
 
 - Provides a user-friendly interface for interacting with the chat bot and viewing chat history.
 
-### 1.2 System Workflow
+### <i> 1.2 System Workflow: </i>
 
 <b> 1. User Interaction: </b>
 
@@ -46,8 +46,8 @@
 
 - Users can view past interactions through the Streamlit interface by querying the FastAPI backend.
 
-### 1.3 Flowchart
-You can create a flowchart to visually represent the workflow of the system. Here's a simple example of what it might look like:
+### <i> 1.3 Flowchart </i>
+Below is a flowchart that visually represents the workflow of the system:
 ``` bash
 
    Start
@@ -62,7 +62,7 @@ API Request Handling (FastAPI)
 Processing the Request (LangChain Agent)
      |
      v
-          Fetching Data
+     Fetching Data
   /            |         \
  /             |          \
 KnowledgeBase Wikipedia DuckDuckGo 

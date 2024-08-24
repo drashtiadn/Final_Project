@@ -1,10 +1,9 @@
 from sqlalchemy import create_engine, Column, Integer, Text, TIMESTAMP  # Import necessary SQLAlchemy components for database creation and manipulation
-from sqlalchemy.ext.declarative import declarative_base  # Import declarative base class for model definition
 from sqlalchemy.orm import sessionmaker, Session  # Import sessionmaker for session creation and Session class for typing
 from datetime import datetime  # Import datetime for timestamp management
 import os  # Import os for interacting with the operating system
 from dotenv import load_dotenv  # Import load_dotenv to load environment variables from a .env file
-from models import ChatHistory  # Import ChatHistory model (though it is redefined later, which may be redundant)
+from models import ChatHistory, Base # Import ChatHistory model (though it is redefined later, which may be redundant)
 
 # Load environment variables from a .env file into the environment
 load_dotenv()
@@ -26,18 +25,6 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL)
 # autocommit=False ensures that changes are not automatically committed to the database
 # autoflush=False prevents automatic flushing of data to the database
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-# Define a base class for declarative class definitions
-Base = declarative_base()
-
-# Define a ChatHistory class which maps to the "chat_history" table in the database
-class ChatHistory(Base):
-    __tablename__ = "chat_history"  # Name of the table in the database
-
-    id = Column(Integer, primary_key=True, index=True)  # Primary key column with an index for quick lookup
-    user_input = Column(Text, nullable=False)  # Column to store the user's input (cannot be null)
-    agent_response = Column(Text, nullable=False)  # Column to store the agent's response (cannot be null)
-    timestamp = Column(TIMESTAMP, default=datetime.now())  # Column to store the timestamp of the interaction (defaults to the current time)
 
 # Create all tables defined by the Base's subclasses (in this case, ChatHistory) in the database
 Base.metadata.create_all(bind=engine)

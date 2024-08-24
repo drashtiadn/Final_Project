@@ -19,6 +19,10 @@ You can watch the demo of the Intelligent Bus Inquiry Assistance Chat Bot [here]
 
 <b> 5. API Documentation: </b> Accessible via Swagger UI for easy interaction and testing.
 
+### <i> Knowledge Base: </i>
+
+The chatbot leverages a custom Knowledge Base containing detailed information about bus schedules, routes, fares, and more. You can access the Knowledge Base [here](https://drive.google.com/file/d/1vBgB4RlbA1yYkrg7sOWcxcLJReb9ta6u/view?usp=drive_link).
+
 ### <i> Prerequisites: </i>
 
 - Python 3.8+

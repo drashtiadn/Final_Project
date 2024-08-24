@@ -1,3 +1,4 @@
 virtual
 .env
 Knowledgebase.pdf
+__pycache__
