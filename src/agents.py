@@ -33,7 +33,7 @@ docs = loader.load()  # Loads the documents from the PDF
 
 # Text Splitter: Splits the documents into chunks of 1000 characters, with a 200-character overlap
 documents = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200).split_documents(docs)
-
+print(type(documents))
 # from langchain_community.embeddings import SentenceTransformerEmbeddings
 # sentence_transformer_ef = embedding_functions.SentenceTransformerEmbeddingFunction(model_name="all-MiniLM-L6-v2")
 
@@ -81,12 +81,51 @@ documents = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200).s
 # end_time = time.perf_counter()
 # print(f"Elapsed time: {end_time - start_time} seconds")
 
-# retriever = docs.as_retriever()
+# from sentence_transformers import SentenceTransformer
+# model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+# texts = [doc.text for doc in documents]
+# embeddings = model.encode(texts)
+# print(embeddings)
 
-# Chroma Vector Store: Creates a vector store from the document chunks using Google Generative AI embeddings
+from transformers import AutoTokenizer, AutoModel
+import torch
+import torch.nn.functional as F
+
+#Mean Pooling - Take attention mask into account for correct averaging
+def mean_pooling(model_output, attention_mask):
+    token_embeddings = model_output[0] #First element of model_output contains all token embeddings
+    input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
+    return torch.sum(token_embeddings * input_mask_expanded, 1) / torch.clamp(input_mask_expanded.sum(1), min=1e-9)
+
+
+# Load model from HuggingFace Hub
+tokenizer = AutoTokenizer.from_pretrained('sentence-transformers/all-MiniLM-L6-v2')
+model = AutoModel.from_pretrained('sentence-transformers/all-MiniLM-L6-v2')
+
+# Tokenize sentences
+encoded_input = tokenizer(documents, padding=True, truncation=True, return_tensors='pt')
+
+# Compute token embeddings
+with torch.no_grad():
+    model_output = model(**encoded_input)
+
+# Perform pooling
+sentence_embeddings = mean_pooling(model_output, encoded_input['attention_mask'])
+
+# Normalize embeddings
+sentence_embeddings = F.normalize(sentence_embeddings, p=2, dim=1)
+
+print("Sentence embeddings:")
+print(sentence_embeddings)
+# Load model from HuggingFace Hub
+tokenizer = AutoTokenizer.from_pretrained('sentence-transformers/all-MiniLM-L6-v2')
+model = AutoModel.from_pretrained('sentence-transformers/all-MiniLM-L6-v2')
+
+
+# # Chroma Vector Store: Creates a vector store from the document chunks using Google Generative AI embeddings
 # vectordb = Chroma.from_documents(documents, GoogleGenerativeAIEmbeddings(model="models/embedding-001"))
 
-# Retriever: Converts the vector store into a retriever to search for relevant document chunks
+# #Retriever: Converts the vector store into a retriever to search for relevant document chunks
 # retriever = vectordb.as_retriever()
 
 # Retriever Tool: Creates a retriever tool specifically for searching bus-related information
