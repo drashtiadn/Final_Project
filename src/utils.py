@@ -11,3 +11,4 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 # At this point, the 'GOOGLE_API_KEY' variable holds the API key value
 # (if it's set in the .env file), which can be used for configuring API access in the application
+HUGGING_FACE_TOKEN= os.getenv("HUGGING_FACE_TOKEN")

@@ -22,7 +22,7 @@ api_wrapper = WikipediaAPIWrapper(top_k_results=1, doc_content_chars_max=200)
 # WikipediaQueryRun: Wraps around the Wikipedia API to enable querying Wikipedia
 wiki = WikipediaQueryRun(api_wrapper=api_wrapper)
 
-# DuckDuckGo API Wrapper: Configures the wrapper to fetch news from Germany within the last day, limiting to 2 results
+# DuckDuckGo API Wrapper: Configures the wrapper to fetch news from India within the last day, limiting to 2 results
 duckduckgo_wrapper = DuckDuckGoSearchAPIWrapper(region="in-en", time="d", max_results=2)
 # DuckDuckGoSearchResults: Tool to retrieve search results from DuckDuckGo based on the API wrapper
 duckduckgo = DuckDuckGoSearchResults(api_wrapper=duckduckgo_wrapper, source="news")
@@ -34,11 +34,60 @@ docs = loader.load()  # Loads the documents from the PDF
 # Text Splitter: Splits the documents into chunks of 1000 characters, with a 200-character overlap
 documents = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200).split_documents(docs)
 
+# from langchain_community.embeddings import SentenceTransformerEmbeddings
+# sentence_transformer_ef = embedding_functions.SentenceTransformerEmbeddingFunction(model_name="all-MiniLM-L6-v2")
+
+# embeddings = SentenceTransformerEmbeddings(model_name="nomic-ai/nomic-embed-text-v1", model_kwargs={"trust_remote_code":True}) 
+# doc_result = embeddings.embed_documents(["text", "This is not a test document."])
+
+# from chromadb import Documents, EmbeddingFunction, Embeddings
+# class MyEmbeddingFunction(EmbeddingFunction):
+#     def __call__(self, input: Documents) -> Embeddings:
+#         # embed the documents somehow
+#         collection = client.create_collection(name="my_collection", embedding_function=emb_fn)
+#         return embeddings
+
+# sentence_transformer_ef = documents.SentenceTransformerEmbeddingFunction(model_name="all-MiniLM-L6-v2")
+# embeddings = SentenceTransformerEmbeddings(model_name="nomic-ai/nomic-embed-text-v1", model_kwargs={"trust_remote_code":True}) 
+# doc_result = embeddings.embed_documents(["text", "This is not a test document."])
+
+# import time
+# from chromadb.utils.embedding_functions import all-MiniLM-L6-v2
+
+# ef = all-MiniLM-L6-v2(preferred_providers=['CUDAExecutionProvider'])
+
+# docs = []
+# for i in range(1000):
+#     docs.append(f"this is a document with id {i}")
+
+# start_time = time.perf_counter()
+# embeddings = ef(docs)
+# end_time = time.perf_counter()
+# print(f"Elapsed time: {end_time - start_time} seconds")
+
+
+# import time
+# from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
+# # This will download the model to your machine and set it up for GPU support
+# ef = SentenceTransformerEmbeddingFunction(model_name="all-MiniLM-L6-v2")
+
+# # Test with 10k documents
+# docs = []
+# for i in range(10000):
+#     docs.append(f"this is a document with id {i}")
+
+# start_time = time.perf_counter()
+# embeddings = ef(docs)
+# end_time = time.perf_counter()
+# print(f"Elapsed time: {end_time - start_time} seconds")
+
+# retriever = docs.as_retriever()
+
 # Chroma Vector Store: Creates a vector store from the document chunks using Google Generative AI embeddings
-vectordb = Chroma.from_documents(documents, GoogleGenerativeAIEmbeddings(model="models/embedding-001"))
+# vectordb = Chroma.from_documents(documents, GoogleGenerativeAIEmbeddings(model="models/embedding-001"))
 
 # Retriever: Converts the vector store into a retriever to search for relevant document chunks
-retriever = vectordb.as_retriever()
+# retriever = vectordb.as_retriever()
 
 # Retriever Tool: Creates a retriever tool specifically for searching bus-related information
 retriever_tool = create_retriever_tool(

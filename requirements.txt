@@ -19,3 +19,4 @@ transformers==4.44.0
 unstructured==0.15.3
 uvicorn==0.30.5
 wikipedia==1.4.0
+sentence_transformers
