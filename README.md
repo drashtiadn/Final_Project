@@ -79,11 +79,13 @@ pip install -r requirements.txt
 
 ```bash
 GOOGLE_API_KEY="your_google_api_key"
+HUGGING_FACE_TOKEN="your_hugging_face_token"
 USER=postgres
 DATABASE=chatdb
 PASSWORD=password
 HOST=localhost
 PORT=5432
+FASTAPI_BASE_URL=http://127.0.0.1:8000
 ```
 
 *** Replace the placeholder values with your actual PostgreSQL credentials and Google API key. ***
