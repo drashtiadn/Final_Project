@@ -34,18 +34,18 @@ docs = loader.load()
 
 documents = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200).split_documents(docs)
 
+# Initialize the Chroma vector store using the embeddings
+# vectordb = Chroma.from_documents(documents, GoogleGenerativeAIEmbeddings(model="models/embedding-001"))
+# retriever = vectordb.as_retriever()
+
+
 huggingface_embeddings=HuggingFaceBgeEmbeddings(
-    model_name="dunzhang/stella_en_1.5B_v5",   #"BAAI/bge-small-en-v1.5",      #sentence-transformers/all-MiniLM-l6-v2
+    model_name="dunzhang/stella_en_1.5B_v5",  #"BAAI/bge-small-en-v1.5",      #sentence-transformers/all-MiniLM-l6-v2
     model_kwargs={'device':'cpu'},
     encode_kwargs={'normalize_embeddings':True}
-
 )
 
-import  numpy as np
-print(np.array(huggingface_embeddings.embed_query(documents[0].page_content)))
-print(np.array(huggingface_embeddings.embed_query(documents[0].page_content)).shape)
-
-vectordb = Chroma.from_documents(documents[:120],huggingface_embeddings)
+vectordb = Chroma.from_documents(documents, huggingface_embeddings)
 
 # Create the retriever
 retriever = vectordb.as_retriever()
